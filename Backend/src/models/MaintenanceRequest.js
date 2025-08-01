@@ -31,12 +31,12 @@ const maintenanceRequestSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    media: [String], // file URLs
+    medias: [String], 
     
-    message: {
+    messages: [{
       type: String,
       default: ''
-    },
+    }],
 
     status: {
       type: String,

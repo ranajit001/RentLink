@@ -23,44 +23,44 @@ const app = express();
 const server = http.createServer(app);
 
 //  Setup Socket.IO
-const io = new Server(server, {
-  cors: {
-    origin: '*', // replace with frontend domain in prod
-    methods: ['GET', 'POST']
-  }
-});
+// const io = new Server(server, {
+//   cors: {
+//     origin: '*', 
+//     methods: ['GET', 'POST']
+//   }
+// });
 
-//  Middleware
+
 app.use(cors({
-  origin: (origin, callback) => callback(null, origin), // allows any origin
+  origin: (origin, callback) => callback(null, origin), 
   credentials: true
 }));
 app.use(express.json());
 app.use(cookieParser())
 
-//  Routes
+
 app.use('/api/auth', AuthRouter);
 app.use('/api/property', propertyRoutes);
 app.use('/api/maintenance', maintenanceRoutes);
 app.use('/api/rent', rentRoutes);
 
-//  Home Test
+
 app.get('/', (req, res) => {
-  res.send('🏠 Tenant-Landlord Platform is running!');
+  res.send(' Tenant-Landlord Platform is running!');
 });
 
-//  Socket.IO Chat
-setupMessageSocket(io);
+// socket.io
+// setupMessageSocket(io);
 
-//  MongoDB Connection
+
 connectDB().then(() => {
   const PORT = + process.env.PORT || 8080;
 
   //  Start cron jobs
   startRentGenerationJob();
-//   startReminderJob();
+
 
   server.listen(PORT, () => {
-    console.log(`✅ Server running...`);
+    console.log(` Server running...`);
   });
 });

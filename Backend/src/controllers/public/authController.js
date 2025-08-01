@@ -1,16 +1,16 @@
-import UserModel from "../models/User.js";
+import UserModel from "../../models/User.js";
 import jwt from "jsonwebtoken";
 import argon2 from "argon2";
 import { configDotenv } from "dotenv";
 configDotenv()
 
-// Secrets (You should store in .env file)
+
 const ACCESS_SECRET = process.env.JWT_SECRET ;
 const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET ;
 
-// Utility: Generate Access + Refresh Tokens
+
 const generateTokens = (user) => {
-  const payload = { _id: user._id, role: user.role };
+  const payload = { id: user._id, role: user.role,email:user.email };
 
   const accessToken = jwt.sign(payload, ACCESS_SECRET, { expiresIn: "10d" });
   const refreshToken = jwt.sign(payload, REFRESH_SECRET, { expiresIn: "30d" });
@@ -19,12 +19,12 @@ const generateTokens = (user) => {
 };
 
 //  Register User (Tenant or Landlord)
-export const registerUser = async (req, res) => { console.log('hiii');
+export const registerUser = async (req, res) => { 
 
   try {
     const { name, email, password, role, contactInfo, language } = req.body;
 
-    const existingUser = await UserModel.findOne({ email });
+    const existingUser = await UserModel.findOne({ email,role });
     if (existingUser)
       return res.status(400).json({ message: "User already exists" });
 
@@ -71,9 +71,9 @@ export const registerUser = async (req, res) => { console.log('hiii');
 //  Login User
 export const loginUser = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password,role } = req.body;
 
-    const user = await UserModel.findOne({ email });
+    const user = await UserModel.findOne({ email,role });
     if (!user) return res.status(404).json({ message: "User not found" });
 
     const isMatch = await argon2.verify(user.password, password);

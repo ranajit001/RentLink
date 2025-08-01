@@ -1,4 +1,3 @@
-// controllers/messageController.js
 
 import MessageModel from '../models/Message.js';
 

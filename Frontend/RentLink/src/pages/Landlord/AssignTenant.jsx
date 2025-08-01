@@ -105,6 +105,11 @@ const AssignTenant = () => {
       )}
     </div>
   );
+
+
+
+
+
 };
 
 export default AssignTenant;

@@ -1,39 +1,46 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import  { createContext, useContext, useEffect, useState } from 'react';
 import baseApi from '../utils/baseApi';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
 
-const saved = JSON.parse(localStorage.getItem('auth'))
+const saved = JSON.parse(localStorage.getItem('auth')) || {user:null,accessToken: null};
+
 
   const [auth, setAuth] = useState({
-     user:  saved?.user|| null,
-    accessToken:saved?.accessToken || null,
+     user:  saved.user,
+    accessToken:saved.accessToken ,
   });
 
 
   useEffect(() => {
-    localStorage.setItem('auth', JSON.stringify(auth));
+   if(auth.user && auth.accessToken) 
+                localStorage.setItem('auth', JSON.stringify(auth));
   }, [auth]);
 
 
   //imported to login.jsx and register.jsx
   const loginOrRegister = ({ user, accessToken }) => {
-    setAuth({ user, accessToken });
+    if(user && accessToken)
+              setAuth({ user, accessToken });
   };
 
 
   
 
   const logout = async () => {
-    await fetch(`${baseApi}/api/auth/logout`, {
+    try {
+          await fetch(`${baseApi}/api/auth/logout`, {
       method: 'POST',
       credentials: 'include',
     });
 
     localStorage.removeItem('auth');
     setAuth({ user: null, accessToken: null });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const refreshAccessToken = async () => {

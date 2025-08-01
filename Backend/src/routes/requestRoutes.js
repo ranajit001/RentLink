@@ -11,16 +11,20 @@ import {
   getRequestById
 } from '../controllers/landlord/manageRequestController.js';
 
+
+import { upload } from '../middlewares/multer-middleware.js';
+
 const maintenanceRoutes = express.Router();
 
 // 🧍 Tenant
 maintenanceRoutes
-.post('/tenant/create', protect, isTenant, createRequest)
-.get('/tenant', protect, isTenant, getTenantRequests)
+.post('/tenant/create', protect, isTenant,upload.array('medias', 3), createRequest)
+.get('/tenant/:propertyId', protect, isTenant, getTenantRequests)
 
 // 👑 Landlord
 .get('/landlord', protect, isLandlord, getLandlordRequests)
-.patch('/landlord/:id', protect, isLandlord, updateRequestStatus)
+.patch('/landlord/update/:id', protect, isLandlord, updateRequestStatus)
 .get('/landlord/:id', protect, isLandlord, getRequestById);
 
 export default maintenanceRoutes;
+

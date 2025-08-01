@@ -14,9 +14,11 @@ const rentRoutes = express.Router();
 
 // 👤 Tenant Routes
 rentRoutes.get('/tenant', protect, isTenant, getTenantRentHistory)
-.patch('/tenant/pay/:rentId', protect, isTenant, markRentAsPaid)
+.patch('/tenant/pay/:rentId',protect, isTenant, markRentAsPaid)
 
 // 🧑‍💼 Landlord Routes
-.get('/landlord', protect, isLandlord, getLandlordRentRecords);
+.get('/landlord/rent-records', protect, isLandlord, getLandlordRentRecords);
 
 export default rentRoutes;
+
+
