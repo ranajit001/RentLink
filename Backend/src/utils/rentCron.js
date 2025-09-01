@@ -8,7 +8,7 @@ import RentModel  from '../models/RentPayment.js';
 export const startRentGenerationJob = () => { console.log('cron started....');
 
   cron.schedule('0 9 1 * *', async () => {
-
+//  cron.schedule('* * * * *', async () => {
 
     try {
 
@@ -45,6 +45,8 @@ export const startRentGenerationJob = () => { console.log('cron started....');
           });
 
           await payment.save();
+          
+          
         }
       }
     } catch (err) {

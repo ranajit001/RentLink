@@ -40,3 +40,14 @@ export const getTenantRentHistory = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+// export const rentedproperties = async (req, res) => {
+
+//   try {
+//     const properties = await PropertyModel.find({ tenantIds: new mongoose.Types.ObjectId(req.user.id) })
+//                               .populate('landlordId' ,'-password -assignedProperties')
+//     res.json({ success: true, properties });
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// };

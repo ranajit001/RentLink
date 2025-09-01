@@ -73,7 +73,7 @@ export const tenantOptions = [
     path: 'maintenance',
     submenu: [
       { label: 'All requests', path: 'maintenance/all-requests' },
-      { label: 'New requests', path: 'maintenance/new-request' }
+      // { label: 'New requests', path: 'maintenance/new-request' }
     ]
   }
 ];

@@ -6,7 +6,7 @@ import fs from 'fs/promises';
 import PropertyModel from '../../models/Property.js';
 import mongoose from 'mongoose';
 
-export const createRequest = async (req, res) => {  console.log('new request create');
+export const createRequest = async (req, res) => { // console.log('new request create');
 
   try {
     const { propertyId, category, urgency, description,message='Request submitted by tenant.'} = req.body;
@@ -45,7 +45,7 @@ export const createRequest = async (req, res) => {  console.log('new request cre
 
 
 export const getTenantRequests = async (req, res) => {
-  console.log('Getting tenant requests');
+  //console.log('Getting tenant requests');
 
   try {
     const { propertyId } = req.params;
@@ -63,7 +63,7 @@ export const getTenantRequests = async (req, res) => {
       return res.status(404).json({ message: 'Property not found or unauthorized' });
     }
 
-    console.log('User ID:', req.user.id, 'Property ID:', propertyId);
+    //console.log('User ID:', req.user.id, 'Property ID:', propertyId);
 
     // No need for ObjectId conversion - Mongoose handles it
     const requests = await MaintenanceModel.find({
@@ -73,7 +73,7 @@ export const getTenantRequests = async (req, res) => {
     .sort({ createdAt: -1 })
     .lean(); // For better performance
 
-    console.log('Found requests:', requests.length);
+    //console.log('Found requests:', requests.length);
 
     // Return in format expected by frontend
     res.json({ 
